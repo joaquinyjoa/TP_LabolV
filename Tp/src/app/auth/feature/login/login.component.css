@@ -1,0 +1,75 @@
+*, ::after, ::before {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #141e30, #243b55);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+}
+
+h1 {
+  font-size: 26px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #00d4ff;
+}
+
+.form {
+  width: 340px;
+  padding: 40px 25px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+}
+
+.form .control {
+  margin-bottom: 20px;
+}
+
+.form .control input {
+  width: 100%;
+  padding: 14px 16px;
+  border: none; /* 👈 quita el borde */
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05); /* ligero fondo para que se vea */
+  color: #fff;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.form .control input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.1); /* más claro al enfocar */
+}
+
+.form small {
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  color: #ff6b6b; /* rojo para error */
+}
+
+.btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  border: none;
+  font-weight: bold;
+  font-size: 16px;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  color: #fff;
+  background: linear-gradient(90deg, #00d4ff, #340979);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 212, 255, 0.4);
+}
