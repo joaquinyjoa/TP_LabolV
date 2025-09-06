@@ -1,9 +1,22 @@
-<div *ngIf="githubData; else cargando">
-  <h2>{{ githubData.name }}</h2>
-  <img [src]="githubData.avatar_url" alt="Avatar" width="150">
-  <p>Bio: {{ githubData.bio }}</p>
+<div class="profile-container">
+  <div class="main-card">
+    <img [src]="githubData.avatar_url" alt="Avatar" class="avatar">
+    <h2>{{ githubData.name }} ({{ githubData.login }})</h2>
+    <a [href]="githubData.html_url" target="_blank" class="profile-link">Ver perfil en GitHub</a>
+  </div>
+
+  <div class="info-cards">
+    <div class="info-card"><strong>Bio:</strong> {{ githubData.bio }}</div>
+    <div class="info-card"><strong>Ubicación:</strong> {{ githubData.location || 'No disponible' }}</div>
+    <div class="info-card"><strong>Compañía:</strong> {{ githubData.company || 'No disponible' }}</div>
+    <div class="info-card"><strong>Blog:</strong> 
+      <a *ngIf="githubData.blog" [href]="githubData.blog" target="_blank">{{ githubData.blog }}</a>
+      <span *ngIf="!githubData.blog">No disponible</span>
+    </div>
+    <div class="info-card"><strong>Repositorios públicos:</strong> {{ githubData.public_repos }}</div>
+    <div class="info-card"><strong>Seguidores:</strong> {{ githubData.followers }}</div>
+    <div class="info-card"><strong>Siguiendo:</strong> {{ githubData.following }}</div>
+    <div class="info-card"><strong>Creado en:</strong> {{ githubData.created_at | date:'longDate' }}</div>
+  </div>
 </div>
 
-<ng-template #cargando>
-  <p>Cargando datos...</p>
-</ng-template>

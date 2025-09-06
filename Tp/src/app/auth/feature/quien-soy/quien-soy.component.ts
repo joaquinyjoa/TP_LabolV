@@ -11,7 +11,6 @@ import { CommonModule } from '@angular/common';
 })
 export class QuienSoyComponent implements OnInit {
   githubData: any = null;
-  cargando: boolean = true;
 
   constructor(private http: HttpClient) { }
 
@@ -25,12 +24,10 @@ export class QuienSoyComponent implements OnInit {
       .subscribe({
         next: (data) => {
           this.githubData = data;
-          this.cargando = false;
         },
         error: (err) => {
           console.error('Error al obtener datos', err);
           this.githubData = null;
-          this.cargando = false;
         }
       });
   }
