@@ -2,62 +2,88 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { esEmailValido, esRequerido } from '../utils/validators';
 import { AuthService } from '../../data-access/auth.service';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
-
-interface FormLogin
-{
-  email : FormControl<string | null>;
-  contraseña : FormControl<string | null>;
+interface FormLogin {
+  email: FormControl<string | null>;
+  contraseña: FormControl<string | null>;
 }
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule],
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    ToastModule,   // 👈 solo este para el contenedor <p-toast>
+    CommonModule,
+  ],
+  providers: [MessageService],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export default class LoginComponent {
-  
+  private _messageService = inject(MessageService);
   private _formBuilder = inject(FormBuilder);
-
-  //inyeccion del servicio
   private _authService = inject(AuthService);
-  
-
-  esEmailValido()
-  {
-    return esEmailValido(this.form);
-  }
-
-  esRequerido(field: 'contraseña' | 'email')
-  {
-    return esRequerido(field, this.form);
-  }
+  private _router = inject(Router);
 
   form = this._formBuilder.group<FormLogin>({
     email: this._formBuilder.control('', [
-      Validators.required, Validators.email
+      Validators.required,
+      Validators.email
     ]),
-    contraseña:  this._formBuilder.control('', Validators.required),
+    contraseña: this._formBuilder.control('', Validators.required),
   });
 
-  async submit()
-  {
-    if (this.form.valid) return;
-    try{
-    const email = this.form.value.email;
-    const contraseña = this.form.value.contraseña;
-
-    if (!email || !contraseña ) return;
-    
-    console.log({ email, contraseña });
-    
-      await this._authService.singUp({ email: email!, password: contraseña! });
-    } 
-    catch(error){
-      console.log(error);
-    }
-  
+  esEmailValido() {
+    return esEmailValido(this.form);
   }
-    
+
+  esRequerido(field: 'contraseña' | 'email') {
+    return esRequerido(field, this.form);
+  }
+
+  async submit() {
+    if (!this.form.valid) return;
+
+    try {
+      const email = this.form.value.email!;
+      const contraseña = this.form.value.contraseña!;
+
+      await this._authService.logear({ email, password: contraseña });
+
+      this._messageService.add({
+        severity: 'success',
+        summary: 'Éxito',
+        detail: 'Bienvenido ✅'
+      });
+
+      this._router.navigate(['/home']);
+    } catch (error: any) {
+      console.error(error);
+
+      let mensaje = 'Ocurrió un error inesperado';
+
+      switch (error.code) {
+        case 'auth/user-not-found':
+          mensaje = 'El usuario no existe';
+          break;
+        case 'auth/wrong-password':
+          mensaje = 'Contraseña incorrecta';
+          break;
+        case 'auth/invalid-email':
+          mensaje = 'Correo no válido';
+          break;
+      }
+
+      this._messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: mensaje
+      });
+    }
+  }
 }

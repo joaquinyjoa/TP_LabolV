@@ -1,2 +1,5 @@
-{}
- 
+{
+  "hosting": {
+    "source": "./path-to-your-angular-workspace"
+  }
+}

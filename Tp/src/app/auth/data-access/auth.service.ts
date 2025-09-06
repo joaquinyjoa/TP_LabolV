@@ -1,6 +1,6 @@
 //uso de firebase authentication
 import { inject, Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '@angular/fire/auth';
 
 export interface User{
   email: string;
@@ -14,9 +14,14 @@ export class AuthService {
 
   private _auth = inject(Auth);
 
-  singUp(User: User){
+  registrar(User: User){
     /// Nos devuelve una promesa 
     return createUserWithEmailAndPassword(this._auth, User.email, User.password);
+  }
+
+  logear(User: User){
+    /// Nos devuelve una promesa 
+    return signInWithEmailAndPassword(this._auth, User.email, User.password);
   }
 
   constructor() { }

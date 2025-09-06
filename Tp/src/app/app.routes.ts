@@ -1,13 +1,21 @@
 import { Routes } from '@angular/router';
-// import { BienvenidoComponent } from './auth/feature/bienvenido/bienvenido.component';
-// import { LoginComponent } from './auth/feature/login/login.component';
 
 export const routes: Routes = [
-    { 
-        path: 'auth',
-        loadChildren: () => import('./auth/feature/auth.routes')
-    },
-    // {
-    //     path: 'tasks',
-    // }
+  {
+    path: '',
+    loadComponent: () => import('./auth/feature/login/login.component')
+  },
+  {
+    path: 'home',
+    loadComponent: () => import('./auth/feature/home/home.component').then(m => m.HomeComponent)
+  },
+  {
+    path: 'error',
+    loadComponent: () => import('./auth/feature/error/error.component')
+  },
+  {
+    path: 'home/quiensoy',
+    loadComponent: () => import('./auth/feature/quien-soy/quien-soy.component').then(m => m.QuienSoyComponent)
+    }
+,
 ];

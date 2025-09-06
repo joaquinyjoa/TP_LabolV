@@ -1,35 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
-</head>
-<body>
-    <form autocomplete="off" class="form" (ngSubmit)="submit()" [formGroup]="form">
-    <div class="control">
-      <h1>Inicio de sesión</h1>
-    </div>
+<p-toast position="top-right" [baseZIndex]="10000"></p-toast>
+
+<div class="login-container">
+  <form autocomplete="off" class="form" (ngSubmit)="submit()" [formGroup]="form">
+    <h1>Inicio de sesión</h1>
 
     <div class="control">
       <input name="email" placeholder="Email" type="text" formControlName="email">
-      @if(esRequerido('email')) {
-        <small>Este campo es requerido</small>
-      }
-      @if(esEmailValido()) {
-        <small>El email no es válido</small>
-      }
+      <small *ngIf="esRequerido('email')">Este campo es requerido</small>
+      <small *ngIf="esEmailValido()">El email no es válido</small>
     </div>
 
     <div class="control">
       <input name="contraseña" placeholder="Contraseña" type="password" formControlName="contraseña">
-      @if(esRequerido('contraseña')) {
-        <small>Este campo es requerido</small>
-      }
+      <small *ngIf="esRequerido('contraseña')">Este campo es requerido</small>
     </div>
 
-    <button class="btn" type="submit">Iniciar Sesión</button>
+    <button class="btn" type="submit">Iniciar sesión</button>
   </form>
-
-</body>
-</html>
+</div>

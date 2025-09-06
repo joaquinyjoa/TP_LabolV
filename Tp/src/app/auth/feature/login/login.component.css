@@ -1,31 +1,30 @@
-*, ::after, ::before {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
+/* Mantener el fondo de la página */
+.login-container {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #141e30, #243b55);
+  background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d); /* tu fondo anterior */
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: #fff;
 }
 
-h1 {
-  font-size: 26px;
-  margin-bottom: 20px;
-  text-align: center;
-  color: #00d4ff;
-}
-
+/* Formulario centrado */
 .form {
-  width: 340px;
-  padding: 40px 25px;
-  background: rgba(0, 0, 0, 0.7);
-  border-radius: 12px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+  width: 360px;
+  padding: 40px 30px;
+  background: rgba(0, 0, 0, 0.75);
+  border-radius: 14px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  animation: fadeIn 0.6s ease;
+}
+
+.form h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #00e0ff;
+  font-weight: 600;
 }
 
 .form .control {
@@ -35,9 +34,9 @@ h1 {
 .form .control input {
   width: 100%;
   padding: 14px 16px;
-  border: none; /* 👈 quita el borde */
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.05); /* ligero fondo para que se vea */
+  background: rgba(255, 255, 255, 0.07);
   color: #fff;
   font-size: 16px;
   transition: all 0.3s ease;
@@ -45,16 +44,19 @@ h1 {
 
 .form .control input:focus {
   outline: none;
-  background: rgba(255, 255, 255, 0.1); /* más claro al enfocar */
+  border-color: #00e0ff;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 8px rgba(0, 224, 255, 0.6);
 }
 
 .form small {
   display: block;
   margin-top: 6px;
   font-size: 13px;
-  color: #ff6b6b; /* rojo para error */
+  color: #ff6b6b;
 }
 
+/* Botón */
 .btn {
   width: 100%;
   padding: 14px;
@@ -65,11 +67,52 @@ h1 {
   letter-spacing: 0.05em;
   cursor: pointer;
   color: #fff;
-  background: linear-gradient(90deg, #00d4ff, #340979);
+  background: linear-gradient(90deg, #00d4ff, #7a00ff);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 212, 255, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0, 212, 255, 0.5);
+}
+
+/* Animación fadeIn */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ----- Diseño para el toast ----- */
+:host ::ng-deep .p-toast {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:host ::ng-deep .p-toast-message {
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-weight: 500;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+  color: #fff;
+}
+
+:host ::ng-deep .p-toast-message-success {
+  background: linear-gradient(90deg, #00d4ff, #28a745);
+}
+
+:host ::ng-deep .p-toast-message-error {
+  background: linear-gradient(90deg, #ff4b5c, #ff0000);
+}
+
+:host ::ng-deep .p-toast-summary {
+  font-size: 16px;
+}
+
+:host ::ng-deep .p-toast-detail {
+  font-size: 14px;
 }

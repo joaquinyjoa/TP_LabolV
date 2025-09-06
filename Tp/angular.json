@@ -2,6 +2,13 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
+  "deploy": {
+    "builder": "@angular/fire:deploy",
+    "options": {
+      "version": 2,
+      "buildTarget": "OVERRIDE_YOUR_BUILD_TARGET"
+    }
+  },
   "projects": {
     "tp": {
       "projectType": "application",
@@ -29,7 +36,12 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "server": "src/main.server.ts",
+            "prerender": true,
+            "ssr": {
+              "entry": "src/server.ts"
+            }
           },
           "configurations": {
             "production": {
