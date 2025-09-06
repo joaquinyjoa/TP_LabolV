@@ -48,7 +48,14 @@ export class LoginComponent {
   }
 
   async submit() {
-    if (!this.form.valid) return;
+    if (!this.form.valid) {
+      this._messageService.add({
+        severity: 'warn',
+        summary: 'Formulario incompleto',
+        detail: 'Por favor completa todos los campos correctamente'
+      });
+      return;
+    }
 
     try {
       const email = this.form.value.email!;
@@ -64,11 +71,20 @@ export class LoginComponent {
 
       this._router.navigate(['/home']);
     } catch (error: any) {
-      console.error(error);
+      console.error('Error completo:', error);
 
       let mensaje = 'Ocurrió un error inesperado';
+      let codigo = error.code || '';
 
-      switch (error.code) {
+      // Si no hay code, extraemos auth/... del mensaje
+      if (!codigo && error.message) {
+        const match = error.message.match(/\(auth\/[^\)]+\)/);
+        if (match) {
+          codigo = match[0].replace(/[()]/g, ''); // ej: auth/invalid-credential
+        }
+      }
+
+      switch (codigo) {
         case 'auth/user-not-found':
           mensaje = 'El usuario no existe';
           break;
@@ -77,6 +93,9 @@ export class LoginComponent {
           break;
         case 'auth/invalid-email':
           mensaje = 'Correo no válido';
+          break;
+        case 'auth/invalid-credential':
+          mensaje = 'Credenciales inválidas';
           break;
       }
 
