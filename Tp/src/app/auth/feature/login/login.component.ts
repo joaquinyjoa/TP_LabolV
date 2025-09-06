@@ -24,7 +24,8 @@ interface FormLogin {
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export default class LoginComponent {
+
+export class LoginComponent {
   private _messageService = inject(MessageService);
   private _formBuilder = inject(FormBuilder);
   private _authService = inject(AuthService);
