@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "tp": "tp-angular-hosting",
+    "default": "tp-angular-hosting"
+  },
+  "targets": {},
+  "etags": {}
+}

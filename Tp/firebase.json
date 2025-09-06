@@ -1,5 +1,13 @@
 {
   "hosting": {
-    "source": "./path-to-your-angular-workspace"
+    "source": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "frameworksBackend": {
+      "region": "us-central1"
+    }
   }
 }
