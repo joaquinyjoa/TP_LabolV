@@ -1,3 +1,8 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
 /* Reset básico */
 * {
   margin: 0;
@@ -41,14 +46,15 @@
 
 /* Contenido principal */
 .home-container {
-  padding-top: 80px; /* Para no tapar el contenido con la navbar */
+  padding-top: 80px;
   text-align: center;
-  height: calc(100vh - 60px);
+  min-height: 100vh; /* en vez de calc */
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d); /* mismo fondo que login */
+  background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
   color: #fff;
   font-size: 24px;
   font-weight: 500;
 }
+

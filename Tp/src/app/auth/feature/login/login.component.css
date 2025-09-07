@@ -89,6 +89,12 @@
 }
 
 /* ----- Diseño para el toast ----- */
+:host {
+  display: block;
+  background-color: #000;
+  min-height: 100vh;
+}
+
 :host ::ng-deep .p-toast {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }

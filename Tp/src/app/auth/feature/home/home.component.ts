@@ -10,8 +10,5 @@ import { RouterLink , Router } from '@angular/router';
 })
 export class HomeComponent {
   constructor(private router: Router) {}
-
-  irAQuienSoy(): void {
-    this.router.navigate(['/quiensoy']);
-  }
+  
 }
