@@ -1,15 +1,30 @@
-<!-- Barra de navegación -->
 <nav class="navbar">
   <div class="nav-left">
     <span class="logo">Mi App</span>
   </div>
   <div class="nav-right">
     <a routerLink="/quiensoy" class="nav-link">Quién soy</a>
+
+    <!-- Si hay usuario -->
+    <ng-container *ngIf="(user$ | async) as user">
+      <span class="nav-link">👤 {{ user.email }}</span>
+      <button class="nav-link" (click)="logout()">Log Out</button>
+    </ng-container>
   </div>
 </nav>
 
-<!-- Contenido de la página -->
 <div class="home-container">
-   <p>Bienvenido a la página principal.<br>Desde aquí podés navegar por las distintas secciones de la aplicación.</p>
-    
+  <ng-container *ngIf="(user$ | async) as user; else notLogged">
+    <p>Bienvenido <b>{{ user.email }}</b></p>
+    <div class="options">
+      <button (click)="router.navigate(['/juegos'])">🎮 Juegos</button>
+      <button (click)="router.navigate(['/listados'])">📋 Listados</button>
+    </div>
+  </ng-container>
+
+  <ng-template #notLogged>
+    <p>Bienvenido a la página principal.<br>
+    Desde aquí podés navegar por las distintas secciones de la aplicación.<br>
+    <small>Iniciá sesión para ver más opciones.</small></p>
+  </ng-template>
 </div>

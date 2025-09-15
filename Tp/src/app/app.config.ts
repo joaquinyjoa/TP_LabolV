@@ -15,13 +15,12 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideFirebaseApp(() =>
       initializeApp({
-        projectId: 'juacotp-bedab',
-        appId: '1:369713091350:web:4dfbbaa7a7a8fb582ab637',
-        storageBucket: 'juacotp-bedab.firebasestorage.app',
-        apiKey: 'AIzaSyAGiBudv8_Zx4vOInqzGBlId0wJPfxWydY',
-        authDomain: 'juacotp-bedab.firebaseapp.com',
-        messagingSenderId: '369713091350',
-        measurementId: 'G-MYVFTYWZTY',
+        apiKey: "AIzaSyDzPnhcqvGPrOPqgyAxmLPtZnt9MyuPsrU",
+        authDomain: "tp-angular-hosting.firebaseapp.com",
+        projectId: "tp-angular-hosting",
+        storageBucket: "tp-angular-hosting.firebasestorage.app",
+        messagingSenderId: "130154356667",
+        appId: "1:130154356667:web:eeb7028fdba7368e00ee9e"
       })
     ),
     provideAuth(() => getAuth()),

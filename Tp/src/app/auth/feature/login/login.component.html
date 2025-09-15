@@ -12,9 +12,19 @@
 
     <div class="control">
       <input name="contraseña" placeholder="Contraseña" type="password" formControlName="contraseña">
-       <small *ngIf="esRequerido('contraseña')">Este campo es requerido</small>
+      <small *ngIf="esRequerido('contraseña')">Este campo es requerido</small>
     </div>
 
     <button class="btn" type="submit">Iniciar sesión</button>
+    
+    <p class="link">
+      ¿No tienes cuenta? 
+      <a href="#" (click)="irRegistro($event)">Regístrate aquí</a>
+    </p>
   </form>
+</div>
+
+<!-- Overlay global de loading -->
+<div class="overlay" *ngIf="loading">
+  <mat-spinner diameter="50"></mat-spinner>
 </div>

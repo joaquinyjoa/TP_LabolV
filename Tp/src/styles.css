@@ -7,3 +7,6 @@ html, body, app-root {
   background-color: #000; /* fondo negro */
   overflow-x: hidden; /* evita scroll horizontal no deseado */
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -122,3 +122,18 @@
 :host ::ng-deep .p-toast-detail {
   font-size: 14px;
 }
+
+/* Overlay que ocupa toda la pantalla */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4); /* oscurece el fondo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000; /* arriba de todo */
+}
+

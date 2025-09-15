@@ -5,7 +5,8 @@ import { AuthService } from '../../data-access/auth.service';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; 
 
 interface FormLogin {
   email: FormControl<string | null>;
@@ -19,6 +20,8 @@ interface FormLogin {
     ReactiveFormsModule,
     ToastModule,   // 👈 solo este para el contenedor <p-toast>
     CommonModule,
+    RouterLink,
+    MatProgressSpinnerModule
   ],
   providers: [MessageService],
   templateUrl: './login.component.html',
@@ -30,6 +33,7 @@ export class LoginComponent {
   private _formBuilder = inject(FormBuilder);
   private _authService = inject(AuthService);
   private _router = inject(Router);
+  loading = false; // variable para el loader
 
   form = this._formBuilder.group<FormLogin>({
     email: this._formBuilder.control('', [
@@ -47,6 +51,19 @@ export class LoginComponent {
     return esRequerido(field, this.form);
   }
 
+  irRegistro(event: Event) {
+    event.preventDefault(); // evita recarga
+    this.loading = true;
+
+    // Mostrar spinner durante 3 segundos antes de navegar
+    setTimeout(() => {
+      this._router.navigate(['/registro']).finally(() => {
+        this.loading = false; // desactiva el spinner después de la navegación
+      });
+    }, 3000); 
+  }
+
+
   async submit() {
     if (!this.form.valid) {
       this._messageService.add({
@@ -56,6 +73,8 @@ export class LoginComponent {
       });
       return;
     }
+
+    this.loading = true; // activa spinner
 
     try {
       const email = this.form.value.email!;
@@ -70,7 +89,8 @@ export class LoginComponent {
       });
 
       this._router.navigate(['/home']);
-    } catch (error: any) {
+    } 
+    catch (error: any) {
       console.error('Error completo:', error);
 
       let mensaje = 'Ocurrió un error inesperado';
@@ -104,6 +124,9 @@ export class LoginComponent {
         summary: 'Error',
         detail: mensaje
       });
+    }finally {
+      this.loading = false; // desactiva spinner
     }
+
   }
 }

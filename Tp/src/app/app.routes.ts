@@ -7,6 +7,11 @@ export const routes: Routes = [
       import('./auth/feature/login/login.component').then(m => m.LoginComponent)
   },
   {
+    path: 'registro',
+    loadComponent: () =>
+      import('./auth/feature/registro/registro.component').then(m => m.RegistroComponent)
+  },
+  {
     path: 'home',
     loadComponent: () =>
       import('./auth/feature/home/home.component').then(m => m.HomeComponent)
