@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
   // 🔹 Usuarios de acceso rápido (solo para llenar campos)
   usuariosRapidos = [
     { email: 'test1@email.com', password: '123456Aa', label: 'Usuario Test 1' },
-    { email: 'test2@email.com', password: '123456Bb', label: 'Usuario Test 2' }
+    { email: 'test2@email.com', password: '123456Ab', label: 'Usuario Test 2' }
   ];
 
   ngOnInit() {
