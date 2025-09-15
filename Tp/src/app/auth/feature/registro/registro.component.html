@@ -1,1 +1,47 @@
-<p>registro works!</p>
+<p-toast position="top-right" [baseZIndex]="10000"></p-toast>
+
+<div class="login-container">
+  <form class="form" [formGroup]="form" (ngSubmit)="submit()">
+    <h1>Registro</h1>
+
+    <div class="control">
+      <input placeholder="Nombre" type="text" formControlName="nombre">
+      <small *ngIf="esRequerido('nombre')">Este campo es requerido</small>
+    </div>
+
+    <div class="control">
+      <input placeholder="Apellido" type="text" formControlName="apellido">
+      <small *ngIf="esRequerido('apellido')">Este campo es requerido</small>
+    </div>
+
+    <div class="control">
+      <input placeholder="Email" type="text" formControlName="email">
+      <small *ngIf="esRequerido('email')">Este campo es requerido</small>
+      <small *ngIf="esEmailValido()">El email debe tener un &#64; y terminar en .com</small>
+    </div>
+
+    <div class="control">
+      <input placeholder="Contraseña" type="password" formControlName="contrasena">
+      <small *ngIf="esRequerido('contrasena')">Este campo es requerido</small>
+      <small *ngIf="esContrasenaValida()">La contraseña debe tener 6-10 caracteres, al menos un número y una letra mayúscula</small>
+    </div>
+
+    <div class="control">
+      <input placeholder="Nick" type="text" formControlName="nick">
+      <small *ngIf="esRequerido('nick')">Este campo es requerido</small>
+    </div>
+
+    <!-- Botón normal, no se toca -->
+    <button type="submit" class="btn">Registrarse</button>
+
+    <p class="link">
+      ¿Ya tenés cuenta? 
+      <a href="#" (click)="irLogin($event)">Volver al login</a>
+    </p>
+  </form>
+</div>
+
+<!-- Overlay con spinner centrado -->
+<div class="overlay" *ngIf="loading">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>

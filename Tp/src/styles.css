@@ -4,7 +4,7 @@ html, body, app-root {
   padding: 0;
   height: 100%;
   width: 100%;
-  background-color: #000; /* fondo negro */
+  background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
   overflow-x: hidden; /* evita scroll horizontal no deseado */
 }
 

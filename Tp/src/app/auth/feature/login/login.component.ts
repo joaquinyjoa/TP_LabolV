@@ -18,11 +18,11 @@ interface FormLogin {
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    ToastModule,   // 👈 solo este para el contenedor <p-toast>
+    ToastModule,
     CommonModule,
-    RouterLink,
     MatProgressSpinnerModule
   ],
+
   providers: [MessageService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
