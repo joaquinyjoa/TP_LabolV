@@ -26,6 +26,15 @@
       <small *ngIf="esContrasenaValida()">La contraseña debe tener 6-10 caracteres, al menos un número y una letra mayúscula</small>
     </div>
 
+    <!-- Repetir contraseña -->
+    <div class="control">
+      <input placeholder="Repetir contraseña" type="password" formControlName="repetirContrasena">
+      <small *ngIf="esRequerido('repetirContrasena')">Este campo es requerido</small>
+      <small *ngIf="form.value.contrasena && form.value.repetirContrasena && form.value.contrasena !== form.value.repetirContrasena">
+        Las contraseñas no coinciden
+      </small>
+    </div>
+
     <div class="control">
       <input placeholder="Nick" type="text" formControlName="nick">
       <small *ngIf="esRequerido('nick')">Este campo es requerido</small>

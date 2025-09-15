@@ -6,24 +6,22 @@ import { AuthService } from '../../data-access/auth.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { Firestore, collection, getDocs, query, where, addDoc } from '@angular/fire/firestore';
+import * as bcrypt from 'bcryptjs';
 
 interface FormRegistro {
   nombre: FormControl<string | null>;
   apellido: FormControl<string | null>;
   email: FormControl<string | null>;
   contrasena: FormControl<string | null>;
+  repetirContrasena: FormControl<string | null>;
   nick: FormControl<string | null>;
 }
 
 @Component({
   selector: 'app-registro',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    CommonModule,
-    MatProgressSpinnerModule,
-    ToastModule
-  ],
+  imports: [ReactiveFormsModule, CommonModule, MatProgressSpinnerModule, ToastModule],
   providers: [MessageService],
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.css']
@@ -33,6 +31,7 @@ export class RegistroComponent {
   private _router = inject(Router);
   private _authService = inject(AuthService);
   private _messageService = inject(MessageService);
+  private _firestore = inject(Firestore);
 
   loading = false;
 
@@ -40,7 +39,13 @@ export class RegistroComponent {
     nombre: this._fb.control('', Validators.required),
     apellido: this._fb.control('', Validators.required),
     email: this._fb.control('', [Validators.required, Validators.email]),
-    contrasena: this._fb.control('', [Validators.required, Validators.minLength(6), Validators.maxLength(10), Validators.pattern(/^(?=.*[A-Z])(?=.*\d).+$/)]),
+    contrasena: this._fb.control('', [
+      Validators.required,
+      Validators.minLength(6),
+      Validators.maxLength(10),
+      Validators.pattern(/^(?=.*[A-Z])(?=.*\d).+$/)
+    ]),
+    repetirContrasena: this._fb.control('', Validators.required),
     nick: this._fb.control('', Validators.required)
   });
 
@@ -68,26 +73,71 @@ export class RegistroComponent {
       return;
     }
 
-    this.loading = true;
+    const { email, contrasena, repetirContrasena, nick, nombre, apellido } = this.form.value;
 
-    try {
-      const { email, contrasena } = this.form.value;
-      await this._authService.registrar({ email: email!, password: contrasena! });
-
-      this._messageService.add({
-        severity: 'success',
-        summary: 'Registro exitoso',
-        detail: 'Usuario creado correctamente ✅'
-      });
-
-      setTimeout(() => this._router.navigate(['/login']), 1000);
-    } catch (error) {
+    if (contrasena !== repetirContrasena) {
       this._messageService.add({
         severity: 'error',
         summary: 'Error',
-        detail: 'No se pudo registrar el usuario'
+        detail: 'La contraseña repetida no coincide'
       });
-      console.error(error);
+      return;
+    }
+
+    this.loading = true;
+
+    try {
+      const usuariosRef = collection(this._firestore, 'usuarios');
+      const mensajes: string[] = [];
+
+      // Verificar email duplicado
+      const qEmail = query(usuariosRef, where('email', '==', email));
+      const emailSnapshot = await getDocs(qEmail);
+      if (!emailSnapshot.empty) mensajes.push('El email ya está registrado');
+
+      // Verificar nick duplicado
+      const qNick = query(usuariosRef, where('nick', '==', nick));
+      const nickSnapshot = await getDocs(qNick);
+      if (!nickSnapshot.empty) mensajes.push('El nick ya está en uso');
+
+      // Verificar contraseña duplicada usando bcrypt
+      const allUsuarios = await getDocs(usuariosRef);
+      for (const doc of allUsuarios.docs) {
+        const data: any = doc.data();
+        const hash = data.passwordHash;
+        if (hash && bcrypt.compareSync(contrasena!, hash)) {
+          mensajes.push('La contraseña ya está en uso por otro usuario');
+          break;
+        }
+      }
+
+      if (mensajes.length > 0) {
+        mensajes.forEach(msg => this._messageService.add({ severity: 'error', summary: 'Error', detail: msg }));
+        return;
+      }
+
+      // Generar hash de la contraseña
+      const salt = bcrypt.genSaltSync(10);
+      const passwordHash = bcrypt.hashSync(contrasena!, salt);
+
+      // Registrar usuario usando AuthService
+      await this._authService.registrar({
+        email: email!,
+        password: contrasena!, // Firebase Auth usa la contraseña real para login
+        nombre: nombre!,
+        apellido: apellido!,
+        nick: nick!
+      });
+
+      // Guardar hash en Firestore
+      await addDoc(usuariosRef, { email, nick, passwordHash, nombre, apellido });
+
+      this._messageService.add({ severity: 'success', summary: 'Usuario registrado', detail: 'Registro exitoso ✅' });
+      setTimeout(() => this._router.navigate(['/']), 1500);
+
+    } catch (error: any) {
+      console.error('Firebase error:', error.code, error.message);
+      this._messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo registrar el usuario' });
     } finally {
       this.loading = false;
     }
@@ -99,6 +149,6 @@ export class RegistroComponent {
     setTimeout(() => {
       this._router.navigate(['/']);
       this.loading = false;
-    }, 3000);
+    }, 1500);
   }
 }

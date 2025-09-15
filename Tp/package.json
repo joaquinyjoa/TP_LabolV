@@ -38,6 +38,7 @@
     "@angular/ssr": "^19.2.15",
     "@dataconnect/generated": "file:src/dataconnect-generated",
     "@primeuix/themes": "^1.2.3",
+    "bcryptjs": "^3.0.2",
     "express": "^4.18.2",
     "firebase": "^11.10.0",
     "ngx-sonner": "^3.1.0",
