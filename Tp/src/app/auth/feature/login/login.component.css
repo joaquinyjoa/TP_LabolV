@@ -56,6 +56,24 @@
   color: #ff6b6b;
 }
 
+.form .link {
+  text-align: center; /* centra el texto */
+  margin-top: 20px;   /* espacio arriba del link */
+  font-size: 14px;
+  color: #fff;
+}
+
+.form .link a {
+  color: #00e0ff; /* mismo color que los títulos */
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.form .link a:hover {
+  color: #ffeb3b;
+}
+
 /* Botón */
 .btn {
   width: 100%;

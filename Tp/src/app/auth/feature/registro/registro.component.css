@@ -56,6 +56,25 @@
   color: #ff6b6b;
 }
 
+.form .link {
+  text-align: center;   /* centra el texto */
+  margin-top: 20px;     /* separa del botón */
+  font-size: 14px;
+  color: #fff;
+}
+
+.form .link a {
+  color: #00e0ff;       /* color acorde al diseño del formulario */
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.form .link a:hover {
+  color: #ffeb3b;       /* efecto hover */
+}
+
+
 /* Botón */
 .btn {
   width: 100%;
