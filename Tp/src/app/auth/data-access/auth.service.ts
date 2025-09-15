@@ -7,8 +7,8 @@ import {
   user, 
   User as FirebaseUser 
 } from '@angular/fire/auth';
-import { Firestore, doc, setDoc } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Firestore, doc, docData, setDoc } from '@angular/fire/firestore';
+import { Observable, of, switchMap } from 'rxjs';
 
 export interface User {
   email: string;
@@ -37,21 +37,26 @@ export class AuthService {
   private _auth = inject(Auth);
   private _firestore = inject(Firestore);
 
+  // Observable solo con Firebase Auth
   currentUser$: Observable<FirebaseUser | null> = user(this._auth);
 
-  async registrar(user: User) {
-    // Paso 1: Crear en Auth
-    const cred = await createUserWithEmailAndPassword(this._auth, user.email, user.password);
+  // Nuevo observable que incluye los datos de Firestore (FullUser)
+  currentUserFull$: Observable<FullUser | null> = this.currentUser$.pipe(
+    switchMap(u => {
+      if (!u) return of(null);
+      const userDoc = doc(this._firestore, `users/${u.uid}`);
+      return docData(userDoc) as Observable<FullUser>;
+    })
+  );
 
-    // Paso 2: Guardar datos extras en Firestore
+  async registrar(user: User) {
+    const cred = await createUserWithEmailAndPassword(this._auth, user.email, user.password);
     await setDoc(doc(this._firestore, 'users', cred.user.uid), {
       email: user.email,
       nombre: user.nombre,
       apellido: user.apellido,
-      nick: user.nick,
-      // ⚠️ NO guardes la contraseña en Firestore por seguridad
+      nick: user.nick
     });
-
     return cred;
   }
 

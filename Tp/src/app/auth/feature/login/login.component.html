@@ -22,6 +22,18 @@
       <a href="#" (click)="irRegistro($event)">Regístrate aquí</a>
     </p>
   </form>
+
+  <!-- 🔹 Acceso rápido -->
+  <div class="acceso-rapido">
+    <h3>Acceso rápido 🚀</h3>
+    <div class="botones">
+      <button *ngFor="let user of usuariosRapidos"
+              class="btn-rapido"
+              (click)="loginRapido(user)">
+        {{ user.label }}
+      </button>
+    </div>
+  </div>
 </div>
 
 <!-- Overlay global de loading -->

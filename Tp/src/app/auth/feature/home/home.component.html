@@ -1,30 +1,24 @@
 <nav class="navbar">
   <div class="nav-left">
-    <span class="logo">Mi App</span>
+    <span class="logo">🎯 Mi App</span>
   </div>
+
   <div class="nav-right">
     <a routerLink="/quiensoy" class="nav-link">Quién soy</a>
 
-    <!-- Si hay usuario -->
     <ng-container *ngIf="(user$ | async) as user">
-      <span class="nav-link">👤 {{ user.email }}</span>
-      <button class="nav-link" (click)="logout()">Log Out</button>
+      <span class="nav-link user-nick">👤 {{ user.nick }}</span>
+      <button class="btn btn-logout" (click)="logout()">Cerrar sesión</button>
     </ng-container>
   </div>
 </nav>
 
 <div class="home-container">
-  <ng-container *ngIf="(user$ | async) as user; else notLogged">
-    <p>Bienvenido <b>{{ user.email }}</b></p>
+  <ng-container *ngIf="(user$ | async) as user">
+    <p class="welcome">Bienvenido <b>{{ user.nick }}</b>!</p>
     <div class="options">
-      <button (click)="router.navigate(['/juegos'])">🎮 Juegos</button>
-      <button (click)="router.navigate(['/listados'])">📋 Listados</button>
+      <button class="btn" (click)="router.navigate(['/juegos'])">🎮 Juegos</button>
+      <button class="btn" (click)="router.navigate(['/listados'])">📋 Listados</button>
     </div>
   </ng-container>
-
-  <ng-template #notLogged>
-    <p>Bienvenido a la página principal.<br>
-    Desde aquí podés navegar por las distintas secciones de la aplicación.<br>
-    <small>Iniciá sesión para ver más opciones.</small></p>
-  </ng-template>
 </div>

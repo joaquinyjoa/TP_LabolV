@@ -132,8 +132,13 @@ export class RegistroComponent {
       // Guardar hash en Firestore
       await addDoc(usuariosRef, { email, nick, passwordHash, nombre, apellido });
 
-      this._messageService.add({ severity: 'success', summary: 'Usuario registrado', detail: 'Registro exitoso ✅' });
-      setTimeout(() => this._router.navigate(['/']), 1500);
+      // ✅ Mostrar toast de éxito antes de redirigir
+      this._messageService.add({ 
+        severity: 'success', 
+        summary: 'Registro exitoso', 
+        detail: `El usuario ${nick} se registró correctamente ✅` 
+      });
+      setTimeout(() => this._router.navigate(['/home']), 1500);
 
     } catch (error: any) {
       console.error('Firebase error:', error.code, error.message);

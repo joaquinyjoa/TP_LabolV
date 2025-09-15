@@ -1,12 +1,12 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { esEmailValido, esRequerido } from '../utils/validators';
 import { AuthService } from '../../data-access/auth.service';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; 
+import { Router } from '@angular/router';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 interface FormLogin {
   email: FormControl<string | null>;
@@ -22,26 +22,36 @@ interface FormLogin {
     CommonModule,
     MatProgressSpinnerModule
   ],
-
   providers: [MessageService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   private _messageService = inject(MessageService);
   private _formBuilder = inject(FormBuilder);
   private _authService = inject(AuthService);
   private _router = inject(Router);
-  loading = false; // variable para el loader
+  loading = false;
 
   form = this._formBuilder.group<FormLogin>({
-    email: this._formBuilder.control('', [
-      Validators.required,
-      Validators.email
-    ]),
+    email: this._formBuilder.control('', [Validators.required, Validators.email]),
     contraseña: this._formBuilder.control('', Validators.required),
   });
+
+  // 🔹 Usuarios de acceso rápido (solo para llenar campos)
+  usuariosRapidos = [
+    { email: 'test1@email.com', password: '123456Aa', label: 'Usuario Test 1' },
+    { email: 'test2@email.com', password: '123456Bb', label: 'Usuario Test 2' }
+  ];
+
+  ngOnInit() {
+    // Cargar último usuario guardado
+    const ultimo = localStorage.getItem('ultimoUsuario');
+    if (ultimo) {
+      const { email, password } = JSON.parse(ultimo);
+      this.form.setValue({ email, contraseña: password });
+    }
+  }
 
   esEmailValido() {
     return esEmailValido(this.form);
@@ -52,18 +62,17 @@ export class LoginComponent {
   }
 
   irRegistro(event: Event) {
-    event.preventDefault(); // evita recarga
+    event.preventDefault();
     this.loading = true;
 
-    // Mostrar spinner durante 3 segundos antes de navegar
     setTimeout(() => {
       this._router.navigate(['/registro']).finally(() => {
-        this.loading = false; // desactiva el spinner después de la navegación
+        this.loading = false;
       });
-    }, 3000); 
+    }, 2000);
   }
 
-
+  // 🔹 Login normal
   async submit() {
     if (!this.form.valid) {
       this._messageService.add({
@@ -74,13 +83,16 @@ export class LoginComponent {
       return;
     }
 
-    this.loading = true; // activa spinner
+    this.loading = true;
 
     try {
       const email = this.form.value.email!;
       const contraseña = this.form.value.contraseña!;
 
       await this._authService.logear({ email, password: contraseña });
+
+      // Guardar en localStorage
+      localStorage.setItem('ultimoUsuario', JSON.stringify({ email, password: contraseña }));
 
       this._messageService.add({
         severity: 'success',
@@ -89,18 +101,16 @@ export class LoginComponent {
       });
 
       this._router.navigate(['/home']);
-    } 
-    catch (error: any) {
+    } catch (error: any) {
       console.error('Error completo:', error);
 
       let mensaje = 'Ocurrió un error inesperado';
       let codigo = error.code || '';
 
-      // Si no hay code, extraemos auth/... del mensaje
       if (!codigo && error.message) {
         const match = error.message.match(/\(auth\/[^\)]+\)/);
         if (match) {
-          codigo = match[0].replace(/[()]/g, ''); // ej: auth/invalid-credential
+          codigo = match[0].replace(/[()]/g, '');
         }
       }
 
@@ -124,9 +134,16 @@ export class LoginComponent {
         summary: 'Error',
         detail: mensaje
       });
-    }finally {
-      this.loading = false; // desactiva spinner
+    } finally {
+      this.loading = false;
     }
+  }
 
+  // 🔹 Login rápido: solo llena los campos
+  loginRapido(usuario: { email: string; password: string }) {
+    this.form.setValue({
+      email: usuario.email,
+      contraseña: usuario.password
+    });
   }
 }
