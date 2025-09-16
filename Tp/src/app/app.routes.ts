@@ -4,21 +4,21 @@ export const routes: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('./auth/feature/login/login.component').then(m => m.LoginComponent)
+      import('./pages/login/login.component').then(m => m.LoginComponent)
   },
   {
     path: 'registro',
     loadComponent: () =>
-      import('./auth/feature/registro/registro.component').then(m => m.RegistroComponent)
+      import('./pages/registro/registro.component').then(m => m.RegistroComponent)
   },
   {
     path: 'home',
     loadComponent: () =>
-      import('./auth/feature/home/home.component').then(m => m.HomeComponent)
+      import('./pages/home/home.component').then(m => m.HomeComponent)
   },
   {
     path: 'quiensoy',
     loadComponent: () =>
-      import('./auth/feature/quien-soy/quien-soy.component').then(m => m.QuienSoyComponent)
+      import('./pages/quien-soy/quien-soy.component').then(m => m.QuienSoyComponent)
   },
 ];

@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { AuthService } from '../../data-access/auth.service';
+import { AuthService } from '../../service/auth.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';

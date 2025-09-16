@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule, NgIf, AsyncPipe } from '@angular/common';
-import { AuthService, FullUser } from '../../data-access/auth.service'; 
+import { AuthService, FullUser } from '../../service/auth.service'; 
 import { Observable } from 'rxjs';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
