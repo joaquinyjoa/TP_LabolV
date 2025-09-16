@@ -44,14 +44,7 @@ export class LoginComponent implements OnInit {
     { email: 'test2@email.com', password: '123456Ab', label: 'Usuario Test 2' }
   ];
 
-  ngOnInit() {
-    // Cargar último usuario guardado
-    const ultimo = localStorage.getItem('ultimoUsuario');
-    if (ultimo) {
-      const { email, password } = JSON.parse(ultimo);
-      this.form.setValue({ email, contraseña: password });
-    }
-  }
+  ngOnInit() { }
 
   esEmailValido() {
     return esEmailValido(this.form);
@@ -90,9 +83,6 @@ export class LoginComponent implements OnInit {
       const contraseña = this.form.value.contraseña!;
 
       await this._authService.logear({ email, password: contraseña });
-
-      // Guardar en localStorage
-      localStorage.setItem('ultimoUsuario', JSON.stringify({ email, password: contraseña }));
 
       this._messageService.add({
         severity: 'success',
