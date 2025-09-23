@@ -6,29 +6,23 @@ import { map } from 'rxjs';
 export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
-  const rutasDirectas = ['/juegos', '/quiensoy'];
 
   return authService.estaLogueado$().pipe(
     map(isLoggedIn => {
-
-      // 1️⃣ Si no está logueado, siempre al login
       if (!isLoggedIn) {
+        // Si no está logueado, siempre al login
         return router.createUrlTree(['/']);
       }
 
-      // 2️⃣ Si intenta acceder a rutas directas sin pasar por /home
-      if (rutasDirectas.includes(state.url)) {
-        return router.createUrlTree(['/']);
-      }
-
-      // 3️⃣ Si intenta acceder a cualquier ruta inexistente
-      const rutasValidas = ['/', '/registro', '/home', ...rutasDirectas];
+      const rutasValidas = ['/', '/registro', '/home', '/juegos', '/quiensoy'];
+      
       if (!rutasValidas.includes(state.url)) {
-        return router.createUrlTree(['/**']);
+        return router.createUrlTree(['/**']); // cualquier ruta inválida
       }
 
-      // 4️⃣ Está logueado y es una ruta válida
+      // Está logueado y es una ruta válida
       return true;
     })
   );
 };
+

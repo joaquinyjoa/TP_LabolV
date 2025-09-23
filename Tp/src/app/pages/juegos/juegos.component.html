@@ -1,1 +1,13 @@
-<p>juegos works!</p>
+<div class="games-container">
+  <p class="welcome">Seleccioná un juego 🎮</p>
+  
+  <div class="game-options">
+    <div class="game-card" (click)="navegarPreguntados()">
+      <img [src]="preguntadosImg" alt="Preguntados" class="game-img">
+      <span class="game-name">Preguntados</span>
+    </div>
+  </div>
+
+  <!-- Botón para volver al home -->
+  <button class="btn volver-home" (click)="volverHome()">⬅ Volver al Home</button>
+</div>

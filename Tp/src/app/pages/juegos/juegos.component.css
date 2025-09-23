@@ -1,0 +1,93 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.games-container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.welcome {
+  font-size: 2rem;
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 30px;
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.game-options {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+}
+
+.game-card {
+  background: linear-gradient(90deg, #00d4ff, #7a00ff);
+  color: #fff;
+  width: 200px;
+  height: 250px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  opacity: 0;
+  animation: fadeInUp 0.8s forwards;
+  animation-delay: 0.5s;
+}
+
+.game-card:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  background: linear-gradient(90deg, #7a00ff, #00d4ff);
+}
+
+.game-img {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.game-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/* Animación fade-in desde abajo */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Botón volver al home */
+.volver-home {
+  margin-top: 40px;
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background: linear-gradient(90deg, #00d4ff, #7a00ff);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.volver-home:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  background: linear-gradient(90deg, #7a00ff, #00d4ff);
+}

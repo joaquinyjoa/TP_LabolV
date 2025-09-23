@@ -13,10 +13,11 @@
 /* Fondo de la pantalla */
 :host {
   display: block;
-  background-color: #000;
   min-height: 100vh;
   padding: 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #fff;
+  background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d); /* fondo igual que home */
 }
 
 /* Contenedor principal */

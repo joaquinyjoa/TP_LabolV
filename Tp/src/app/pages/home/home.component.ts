@@ -37,10 +37,10 @@ export class HomeComponent {
   }
 
   NavegarJuegos() {
-    this.router.navigate(['home/juegos']);
+    this.router.navigate(['/juegos']);
   }
 
   NavegarQuienSoy() {
-    this.router.navigate(['/home/quiensoy']);
+    this.router.navigate(['/quiensoy']);
   }
 }
