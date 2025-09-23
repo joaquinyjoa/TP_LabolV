@@ -8,7 +8,7 @@ import {
   User as FirebaseUser 
 } from '@angular/fire/auth';
 import { Firestore, doc, docData, setDoc } from '@angular/fire/firestore';
-import { Observable, of, switchMap } from 'rxjs';
+import { map, Observable, of, switchMap } from 'rxjs';
 
 export interface User {
   email: string;
@@ -59,6 +59,14 @@ export class AuthService {
     });
     return cred;
   }
+
+  estaLogueado$(): Observable<boolean> {
+    return this.currentUser$.pipe(// usamos el observable de Firebase (usuario actual) y lo transformamos con pipe
+    map(user => !!user) // map: convierte el objeto "user" en un booleano
+    // !!user -> true si existe un usuario, false si es null
+    );
+  }
+
 
   logear(user: AuthUser) {
     return signInWithEmailAndPassword(this._auth, user.email, user.password);

@@ -4,7 +4,7 @@
   </div>
 
   <div class="nav-right">
-    <a routerLink="/quiensoy" class="nav-link">Quién soy</a>
+    <a (click)="NavegarQuienSoy()" class="nav-link">Quién soy</a>
 
     <ng-container *ngIf="(user$ | async) as user">
       <span class="nav-link user-nick">👤 {{ user.nick }}</span>
@@ -17,8 +17,9 @@
   <ng-container *ngIf="(user$ | async) as user">
     <p class="welcome">Bienvenido <b>{{ user.nick }}</b>!</p>
     <div class="options">
-      <button class="btn" (click)="router.navigate(['/juegos'])">🎮 Juegos</button>
+      <button class="btn" (click)="NavegarJuegos()">🎮 Juegos</button>
       <button class="btn" (click)="router.navigate(['/listados'])">📋 Listados</button>
     </div>
   </ng-container>
+  
 </div>

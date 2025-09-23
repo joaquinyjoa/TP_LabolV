@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterModule } from '@angular/router'; // <-- importá RouterModule
 import { CommonModule, NgIf, AsyncPipe } from '@angular/common';
 import { AuthService, FullUser } from '../../service/auth.service'; 
 import { Observable } from 'rxjs';
@@ -10,21 +10,21 @@ import { ButtonModule } from 'primeng/button';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [
-    RouterLink, 
+  imports: [ 
+    RouterModule,  // <-- necesario para <router-outlet> y navegación de rutas hijas
     CommonModule,
-    NgIf,       // Para *ngIf
-    AsyncPipe,  // Para el pipe | async
+    NgIf,       
+    AsyncPipe,  
     ToastModule,
     ButtonModule
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  providers: [MessageService]
+  providers: [MessageService],
 })
 export class HomeComponent {
   user$: Observable<FullUser | null>;
-menuOpen: any;
+  menuOpen: any;
 
   constructor(private authService: AuthService, public router: Router) {
     this.user$ = this.authService.currentUserFull$;
@@ -34,5 +34,13 @@ menuOpen: any;
     this.authService.logout().then(() => {
       this.router.navigate(['/']);
     });
+  }
+
+  NavegarJuegos() {
+    this.router.navigate(['home/juegos']);
+  }
+
+  NavegarQuienSoy() {
+    this.router.navigate(['/home/quiensoy']);
   }
 }
