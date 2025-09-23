@@ -11,8 +11,17 @@
     </div>
 
     <div class="control">
-      <input name="contraseña" placeholder="Contraseña" type="password" formControlName="contraseña">
-      <small *ngIf="esRequerido('contraseña')">Este campo es requerido</small>
+      <input name="password" placeholder="Contraseña" type="password" formControlName="password">
+      <small *ngIf="esRequerido('password')">Este campo es requerido</small>
+      <!-- Mensaje de formato de contraseña -->
+      <small *ngIf="form.get('password')?.touched && form.get('password')?.hasError('pattern')">
+        La contraseña debe tener al menos 6 caracteres, incluyendo una mayúscula y una minúscula
+      </small>
+      
+      <!-- Mensaje de contraseña demasiado corta -->
+      <small *ngIf="form.get('password')?.touched && form.get('password')?.hasError('minlength')">
+        La contraseña debe tener mínimo 6 caracteres
+      </small>
     </div>
 
     <button class="btn" type="submit">Iniciar sesión</button>

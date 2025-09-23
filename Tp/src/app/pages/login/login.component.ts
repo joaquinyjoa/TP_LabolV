@@ -10,7 +10,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 interface FormLogin {
   email: FormControl<string | null>;
-  contraseña: FormControl<string | null>;
+  password: FormControl<string | null>;
 }
 
 @Component({
@@ -24,7 +24,7 @@ interface FormLogin {
   ],
   providers: [MessageService],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
   private _messageService = inject(MessageService);
@@ -35,7 +35,11 @@ export class LoginComponent implements OnInit {
 
   form = this._formBuilder.group<FormLogin>({
     email: this._formBuilder.control('', [Validators.required, Validators.email]),
-    contraseña: this._formBuilder.control('', Validators.required),
+    password: this._formBuilder.control('', [
+      Validators.required,
+      Validators.minLength(6),
+      Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z]).+$/)
+    ]),
   });
 
   // 🔹 Usuarios de acceso rápido (solo para llenar campos)
@@ -50,22 +54,18 @@ export class LoginComponent implements OnInit {
     return esEmailValido(this.form);
   }
 
-  esRequerido(field: 'contraseña' | 'email') {
+  esRequerido(field: 'password' | 'email') {
     return esRequerido(field, this.form);
   }
 
   irRegistro(event: Event) {
     event.preventDefault();
     this.loading = true;
-
     setTimeout(() => {
-      this._router.navigate(['/registro']).finally(() => {
-        this.loading = false;
-      });
-    }, 2000);
+      this._router.navigate(['/registro']).finally(() => this.loading = false);
+    }, 500);
   }
 
-  // 🔹 Login normal
   async submit() {
     if (!this.form.valid) {
       this._messageService.add({
@@ -76,13 +76,12 @@ export class LoginComponent implements OnInit {
       return;
     }
 
+    const email = this.form.value.email!;
+    const password = this.form.value.password!;
+
     this.loading = true;
-
     try {
-      const email = this.form.value.email!;
-      const contraseña = this.form.value.contraseña!;
-
-      await this._authService.logear({ email, password: contraseña });
+      await this._authService.logear({ email, password });
 
       this._messageService.add({
         severity: 'success',
@@ -94,15 +93,8 @@ export class LoginComponent implements OnInit {
     } catch (error: any) {
       console.error('Error completo:', error);
 
-      let mensaje = 'Ocurrió un error inesperado';
-      let codigo = error.code || '';
-
-      if (!codigo && error.message) {
-        const match = error.message.match(/\(auth\/[^\)]+\)/);
-        if (match) {
-          codigo = match[0].replace(/[()]/g, '');
-        }
-      }
+      let mensaje = 'El usuario o la contraseña son incorrectos';
+      const codigo = error?.code || error?.message?.match(/\(auth\/[^\)]+\)/)?.[0].replace(/[()]/g, '');
 
       switch (codigo) {
         case 'auth/user-not-found':
@@ -113,9 +105,6 @@ export class LoginComponent implements OnInit {
           break;
         case 'auth/invalid-email':
           mensaje = 'Correo no válido';
-          break;
-        case 'auth/invalid-credential':
-          mensaje = 'Credenciales inválidas';
           break;
       }
 
@@ -129,11 +118,10 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  // 🔹 Login rápido: solo llena los campos
   loginRapido(usuario: { email: string; password: string }) {
     this.form.setValue({
       email: usuario.email,
-      contraseña: usuario.password
+      password: usuario.password
     });
   }
 }

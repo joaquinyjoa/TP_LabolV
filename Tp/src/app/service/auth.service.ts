@@ -24,9 +24,13 @@ export interface AuthUser {
 }
 
 export interface FullUser extends AuthUser {
+  email: string;
+  nick: string;
   nombre: string;
   apellido: string;
-  nick: string;
+  fechaRegistro: any;
+  pais: string;
+  paisFlag: string;
 }
 
 @Injectable({
@@ -37,36 +41,40 @@ export class AuthService {
   private _auth = inject(Auth);
   private _firestore = inject(Firestore);
 
-  // Observable solo con Firebase Auth
   currentUser$: Observable<FirebaseUser | null> = user(this._auth);
 
-  // Nuevo observable que incluye los datos de Firestore (FullUser)
   currentUserFull$: Observable<FullUser | null> = this.currentUser$.pipe(
     switchMap(u => {
       if (!u) return of(null);
-      const userDoc = doc(this._firestore, `users/${u.uid}`);
+      const userDoc = doc(this._firestore, `usuarios/${u.uid}`);
       return docData(userDoc) as Observable<FullUser>;
     })
   );
 
-  async registrar(user: User) {
+  async registrar(user: User, pais: string, paisFlag: string) {
     const cred = await createUserWithEmailAndPassword(this._auth, user.email, user.password);
-    await setDoc(doc(this._firestore, 'users', cred.user.uid), {
+
+    // ✅ Guardamos fecha de registro
+    const fechaRegistro = new Date();
+
+    await setDoc(doc(this._firestore, 'usuarios', cred.user.uid), {
       email: user.email,
       nombre: user.nombre,
       apellido: user.apellido,
-      nick: user.nick
+      nick: user.nick,
+      fechaRegistro,
+      pais,
+      paisFlag
     });
+
     return cred;
   }
 
   estaLogueado$(): Observable<boolean> {
-    return this.currentUser$.pipe(// usamos el observable de Firebase (usuario actual) y lo transformamos con pipe
-    map(user => !!user) // map: convierte el objeto "user" en un booleano
-    // !!user -> true si existe un usuario, false si es null
+    return this.currentUser$.pipe(
+      map(user => !!user)
     );
   }
-
 
   logear(user: AuthUser) {
     return signInWithEmailAndPassword(this._auth, user.email, user.password);

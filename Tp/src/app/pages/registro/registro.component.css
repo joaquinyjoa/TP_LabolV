@@ -156,3 +156,49 @@
   z-index: 10000; /* arriba de todo */
 }
 
+.pais-list {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.pais-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.pais-item:hover {
+  background-color: rgba(0,0,0,0.1);
+}
+
+.flag {
+  width: 25px;
+  height: 15px;
+  object-fit: cover;
+  border: 1px solid #ccc;
+}
+
+/* Contenedor de país seleccionado */
+.pais-selector {
+  display: flex;
+  flex-direction: column;
+}
+
+.pais-flag {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+  gap: 8px;
+}
+
+.pais-flag img {
+  width: 25px;
+  height: 15px;
+  object-fit: cover;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}

@@ -1,3 +1,9 @@
+<!-- Overlay global de loading -->
+<div class="overlay" *ngIf="loading">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+
+<!-- Navbar -->
 <nav class="navbar">
   <div class="nav-left">
     <span class="logo">🎯 Mi App</span>
@@ -13,13 +19,24 @@
   </div>
 </nav>
 
-<div class="home-container">
-  <ng-container *ngIf="(user$ | async) as user">
-    <p class="welcome">Bienvenido <b>{{ user.nick }}</b>!</p>
-    <div class="options">
-      <button class="btn" (click)="NavegarJuegos()">🎮 Juegos</button>
-      <button class="btn" (click)="router.navigate(['/listados'])">📋 Listados</button>
-    </div>
-  </ng-container>
-  
+<!-- Contenido principal -->
+<div class="home-container" *ngIf="(user$ | async) as user">
+  <p class="welcome">Bienvenido <b>{{ user.nick }}</b>!</p>
+
+  <!-- País y bandera -->
+  <div class="pais-info" *ngIf="user.pais && user.paisFlag">
+    <img [src]="user.paisFlag" alt="Bandera de {{ user.pais }}" class="bandera" />
+    <span>{{ user.pais }}</span>
+  </div>
+
+  <!-- Fecha de registro -->
+  <p class="fecha">
+    📅 Registrado el: {{ user.fechaRegistro?.toDate() | date:'dd/MM/yyyy HH:mm' }}
+  </p>
+
+  <!-- Botones de navegación -->
+  <div class="options">
+    <button class="btn" (click)="NavegarJuegos()">🎮 Juegos</button>
+    <button class="btn" (click)="NavegarListados()">📋 Listados</button>
+  </div>
 </div>

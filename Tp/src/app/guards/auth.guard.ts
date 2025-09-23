@@ -14,7 +14,7 @@ export const authGuard: CanActivateFn = (route, state) => {
         return router.createUrlTree(['/']);
       }
 
-      const rutasValidas = ['/', '/registro', '/home', '/juegos', '/quiensoy'];
+      const rutasValidas = ['/', '/registro', '/home', '/juegos', '/quiensoy', '/ahorcado', '/preguntados'];
       
       if (!rutasValidas.includes(state.url)) {
         return router.createUrlTree(['/**']); // cualquier ruta inválida

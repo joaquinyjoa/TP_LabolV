@@ -26,7 +26,6 @@
       <small *ngIf="esContrasenaValida()">La contraseña debe tener 6-10 caracteres, al menos un número y una letra mayúscula</small>
     </div>
 
-    <!-- Repetir contraseña -->
     <div class="control">
       <input placeholder="Repetir contraseña" type="password" formControlName="repetirContrasena">
       <small *ngIf="esRequerido('repetirContrasena')">Este campo es requerido</small>
@@ -35,12 +34,28 @@
       </small>
     </div>
 
+    <div class="control pais-selector">
+      <label for="pais">País</label>
+      <select id="pais" formControlName="pais" (change)="seleccionarPais($event)">
+        <option value="" disabled selected>Seleccioná tu país</option>
+        <option *ngFor="let p of paises" [value]="p.name.common" [attr.data-flag]="p.flags.png">
+          {{ p.name.common }}
+        </option>
+      </select>
+
+      <div class="pais-flag" *ngIf="paisSeleccionado?.flag">
+        <img [src]="paisSeleccionado?.flag" alt="Bandera de {{ paisSeleccionado?.name }}" />
+        <span>{{ paisSeleccionado?.name }}</span>
+      </div>
+
+      <small *ngIf="esRequerido('pais')">Este campo es requerido</small>
+    </div>
+
     <div class="control">
       <input placeholder="Nick" type="text" formControlName="nick">
       <small *ngIf="esRequerido('nick')">Este campo es requerido</small>
     </div>
 
-    <!-- Botón normal, no se toca -->
     <button type="submit" class="btn">Registrarse</button>
 
     <p class="link">
@@ -50,7 +65,6 @@
   </form>
 </div>
 
-<!-- Overlay con spinner centrado -->
 <div class="overlay" *ngIf="loading">
   <mat-spinner diameter="50"></mat-spinner>
 </div>
