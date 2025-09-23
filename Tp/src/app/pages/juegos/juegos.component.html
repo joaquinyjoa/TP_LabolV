@@ -2,9 +2,16 @@
   <p class="welcome">Seleccioná un juego 🎮</p>
   
   <div class="game-options">
+    <!-- Preguntados -->
     <div class="game-card" (click)="navegarPreguntados()">
-      <img [src]="preguntadosImg" alt="Preguntados" class="game-img">
+      <img src="assets/preguntados.png" alt="Preguntados" class="game-img">
       <span class="game-name">Preguntados</span>
+    </div>
+
+    <!-- Ahorcado -->
+    <div class="game-card" (click)="navegarAhorcado()">
+      <img src="assets/ahorcado.png" alt="Ahorcado" class="game-img">
+      <span class="game-name">Ahorcado</span>
     </div>
   </div>
 

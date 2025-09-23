@@ -1,9 +1,8 @@
-<!-- Overlay global de loading -->
+<!-- Spinner global para navegación -->
 <div class="overlay" *ngIf="loading">
   <mat-spinner diameter="50"></mat-spinner>
 </div>
 
-<!-- Navbar -->
 <nav class="navbar">
   <div class="nav-left">
     <span class="logo">🎯 Mi App</span>
@@ -11,32 +10,45 @@
 
   <div class="nav-right">
     <a (click)="NavegarQuienSoy()" class="nav-link">Quién soy</a>
+    <a (click)="NavegarJuegos()" class="nav-link">🎮 Juegos</a>
+    <a (click)="navegarListados()" class="nav-link">📋 Listados</a>
 
-    <ng-container *ngIf="(user$ | async) as user">
+    <ng-container *ngIf="user$ | async as user">
       <span class="nav-link user-nick">👤 {{ user.nick }}</span>
       <button class="btn btn-logout" (click)="logout()">Cerrar sesión</button>
     </ng-container>
   </div>
 </nav>
 
-<!-- Contenido principal -->
-<div class="home-container" *ngIf="(user$ | async) as user">
+<div class="home-container" *ngIf="user$ | async as user">
   <p class="welcome">Bienvenido <b>{{ user.nick }}</b>!</p>
 
-  <!-- País y bandera -->
   <div class="pais-info" *ngIf="user.pais && user.paisFlag">
     <img [src]="user.paisFlag" alt="Bandera de {{ user.pais }}" class="bandera" />
     <span>{{ user.pais }}</span>
   </div>
 
-  <!-- Fecha de registro -->
   <p class="fecha">
     📅 Registrado el: {{ user.fechaRegistro?.toDate() | date:'dd/MM/yyyy HH:mm' }}
   </p>
 
-  <!-- Botones de navegación -->
-  <div class="options">
-    <button class="btn" (click)="NavegarJuegos()">🎮 Juegos</button>
-    <button class="btn" (click)="NavegarListados()">📋 Listados</button>
+  <!-- Chat en tiempo real -->
+  <div class="chat-container">
+    <h3>Chat en tiempo real</h3>
+
+    <div class="chat-box">
+      <div *ngIf="loadingChat" class="spinner-container">
+        <p>🔄 Cargando mensajes...</p>
+      </div>
+
+      <div *ngFor="let msg of chatMessages$ | async" class="chat-message">
+        <b>{{ msg.user }}</b> [{{ msg.time | date:'HH:mm:ss' }}]: {{ msg.message }}
+      </div>
+    </div>
+
+    <div class="chat-input">
+      <input [(ngModel)]="newMessage" placeholder="Escribí tu mensaje..." (keydown.enter)="enviarMensaje(user)"  />
+      <button (click)="enviarMensaje(user)">Enviar</button>
+    </div>
   </div>
 </div>

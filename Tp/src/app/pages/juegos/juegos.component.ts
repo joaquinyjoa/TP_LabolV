@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-juegos',
@@ -8,12 +7,11 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./juegos.component.css']
 })
 export class JuegosComponent implements OnInit {
-  preguntadosImg: string = '';
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
-    this.cargarImagen();
+   
   }
 
   volverHome() {
@@ -24,15 +22,8 @@ export class JuegosComponent implements OnInit {
     this.router.navigate(['/preguntados']);
   }
 
-  cargarImagen() {
-    // Suponiendo que tu API devuelve un objeto { url: 'https://...' }
-    this.http.get<{url: string}>('https://miapi.com/preguntados-img')
-      .subscribe(res => {
-        this.preguntadosImg = res.url;
-      }, err => {
-        console.error('Error cargando imagen', err);
-        // fallback en caso de error
-        this.preguntadosImg = 'assets/preguntados.png';
-      });
+  navegarAhorcado() {
+    this.router.navigate(['/ahorcado']);
   }
+
 }
