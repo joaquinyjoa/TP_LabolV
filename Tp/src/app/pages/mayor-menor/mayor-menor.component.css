@@ -1,0 +1,99 @@
+.mayor-menor-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+/* Contenedor de la carta */
+.carta-container {
+  width: 150px;
+  height: 200px;
+  background: linear-gradient(135deg, #36d1dc, #5b86e5);
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3em;
+  color: #fff;
+  font-weight: 700;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+}
+
+/* Puntaje y mensaje */
+.puntaje, .mensaje {
+  font-size: 1.5em;
+  font-weight: 700;
+  color: #ffd700; /* dorado */
+  text-align: center;
+}
+
+.mensaje {
+  margin-top: 10px;
+}
+
+/* Botones de juego */
+.botones-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.botones-container button {
+  padding: 12px 25px;
+  font-size: 1.2em;
+  font-weight: 700;
+  border-radius: 10px;
+  border: 2px solid #fff;
+  background: linear-gradient(45deg, #ff4b2b, #ff416c);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.botones-container button:hover {
+  background: linear-gradient(45deg, #36d1dc, #5b86e5);
+  transform: translateY(-3px) scale(1.05);
+  border-color: #ffd700;
+}
+
+/* Botón home */
+.btn-home {
+  background: linear-gradient(45deg, #2196f3, #21cbf3);
+}
+
+.btn-home:hover {
+  background: linear-gradient(45deg, #1976d2, #64b5f6);
+}
+
+/* Botón reiniciar */
+.btn-reiniciar {
+  background: linear-gradient(45deg, #ff9800, #ff5722);
+}
+
+.btn-reiniciar:hover {
+  background: linear-gradient(45deg, #e65100, #ff7043);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .carta-container {
+    width: 120px;
+    height: 160px;
+    font-size: 2.5em;
+  }
+  .botones-container button {
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+}

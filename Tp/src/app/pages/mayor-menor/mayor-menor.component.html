@@ -1,1 +1,15 @@
-<p>mayor-menor works!</p>
+<div class="mayor-menor-container">
+  <div class="info">
+    <h2>Mayor o Menor</h2>
+    <p>Carta actual: <span class="carta">{{ cartaActual }}</span></p>
+    <p>Puntaje: <span class="puntaje">{{ puntaje }}</span></p>
+    <p class="mensaje">{{ mensaje }}</p>
+  </div>
+
+  <div class="botones-container">
+    <button (click)="jugar('mayor')" class="btn-juego">Mayor</button>
+    <button (click)="jugar('menor')" class="btn-juego">Menor</button>
+    <button (click)="reiniciar()" class="btn-reiniciar">Reiniciar</button>
+    <button class="btn-home" (click)="navegarAlHome()">Volver al Home</button>
+  </div>
+</div>

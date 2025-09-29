@@ -72,11 +72,22 @@ export class UsuariosService {
     this.usuarioActual.puntosPreguntados += puntos;
   }
 
-  agregarPuntajeMayorMenor(puntos: number) {
+  async agregarPuntajeMayorMenor(puntos: number) {
     if (!this.usuarioActual) return;
+
     if (!this.usuarioActual.puntosMayorMenor) this.usuarioActual.puntosMayorMenor = 0;
     this.usuarioActual.puntosMayorMenor += puntos;
+
+    console.log(`Puntaje local Mayor o Menor: ${this.usuarioActual.puntosMayorMenor}`);
+
+    // Guardar en Firestore
+    const currentUser = await firstValueFrom(user(this._auth));
+    if (!currentUser) return;
+
+    const usuarioRef = doc(this._firestore, `usuarios/${currentUser.uid}`);
+    await updateDoc(usuarioRef, { puntosMayorMenor: this.usuarioActual.puntosMayorMenor });
   }
+
 
   agregarPuntajeJuegoPropio(puntos: number) {
     if (!this.usuarioActual) return;
