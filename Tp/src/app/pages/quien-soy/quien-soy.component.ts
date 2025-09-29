@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-quien-soy',
@@ -12,7 +13,7 @@ import { CommonModule } from '@angular/common';
 export class QuienSoyComponent implements OnInit {
   githubData: any = null;
 
-  constructor(private http: HttpClient) { }
+  constructor(private router: Router,private http: HttpClient) { }
 
   ngOnInit() {
     this.obtenerDatosGitHub();
@@ -30,5 +31,9 @@ export class QuienSoyComponent implements OnInit {
           this.githubData = null;
         }
       });
+  }
+
+  volverHome() {
+    this.router.navigate(['/home']);
   }
 }

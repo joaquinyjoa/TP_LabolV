@@ -146,3 +146,27 @@ h2 {
   font-size: 1.2rem;
   font-weight: bold;
 }
+
+.volver-container {
+  margin-top: 10px; /* separación mínima debajo de la card */
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.btn-volver {
+  padding: 10px 22px;
+  font-size: 15px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #fff;
+  background: linear-gradient(90deg, #ff4b2b, #ff416c);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-volver:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+}

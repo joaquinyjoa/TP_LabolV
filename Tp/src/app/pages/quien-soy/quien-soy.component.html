@@ -3,6 +3,11 @@
     <img [src]="githubData.avatar_url" alt="Avatar" class="avatar">
     <h2>{{ githubData.name }} ({{ githubData.login }})</h2>
     <a [href]="githubData.html_url" target="_blank" class="profile-link">Ver perfil en GitHub</a>
+
+    <!-- Botón volver -->
+    <div class="volver-container">
+      <button class="btn-volver" (click)="volverHome()">⬅ Volver al Home</button>
+    </div>
   </div>
 
   <div class="info-cards">
