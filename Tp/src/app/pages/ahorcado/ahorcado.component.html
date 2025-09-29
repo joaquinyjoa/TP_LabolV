@@ -1,1 +1,36 @@
-<p>ahorcado works!</p>
+<div class="ahorcado-container">
+  <!-- Muñeco a la izquierda -->
+  <div class="muñeco">
+    <div class="poste"></div>
+    <div class="cuerda"></div>
+    <div class="cabeza" [class.visible]="6 - intentos >= 1"></div>
+    <div class="cuerpo" [class.visible]="6 - intentos >= 2"></div>
+    <div class="brazo-izq" [class.visible]="6 - intentos >= 3"></div>
+    <div class="brazo-der" [class.visible]="6 - intentos >= 4"></div>
+    <div class="pierna-izq" [class.visible]="6 - intentos >= 5"></div>
+    <div class="pierna-der" [class.visible]="6 - intentos >= 6"></div>
+  </div>
+
+  <!-- Contenido a la derecha -->
+  <div class="ahorcado-contenido">
+    <p class="palabra">{{ palabraMostrar.join(' ') }}</p>
+    <p class="letras-usadas">Letras usadas: {{ letrasUsadas.join(', ') }}</p>
+    <p class="intentos">Intentos restantes: {{ intentos }}</p>
+
+    <div class="letras">
+      <button *ngFor="let letra of 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')" 
+              [disabled]="letrasUsadas.includes(letra) || intentos === 0 || !palabraMostrar.includes('_')"
+              (click)="jugar(letra)">
+        {{ letra }}
+      </button>
+    </div>
+
+    <p class="mensaje">{{ mensaje }}</p>
+    <button class="btn btn-primary btn-nueva" (click)="nuevaPalabra()">Nueva partida</button>
+
+    <!-- Botón para navegar a la página de juegos -->
+    <button class="btn btn-success btn-nueva mt-2" (click)="navegarAJuegos()">Ir a Juegos</button>
+  </div>
+
+  <p class="puntaje">Puntaje: {{ puntaje }} puntos</p>
+</div>

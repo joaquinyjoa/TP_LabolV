@@ -1,0 +1,211 @@
+.ahorcado-container {
+  max-width: 900px; /* más ancho */
+  margin: 40px auto;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.15); /* transparente para combinar con el fondo global */
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  gap: 40px; /* espacio entre muñeco y contenido */
+}
+
+/* Contenedor del muñeco */
+.muñeco {
+  position: relative;
+  height: 200px;
+  width: 120px;
+}
+
+/* Poste */
+.poste {
+  position: absolute;
+  left: 0%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: 10px;
+  height: 180px;
+  background-color: #333;
+}
+
+/* Barra horizontal superior */
+.poste::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10px;
+  width: 60px;
+  height: 5px;
+  background-color: #333;
+  border-radius: 3px;
+}
+
+/* Cuerda */
+.cuerda {
+  position: absolute;
+  left: 59px; /* extremo de la barra horizontal */
+  bottom: 160px;
+  width: 2px;
+  height: 20px;
+  background-color: #333;
+}
+
+/* Partes del muñeco */
+.cabeza, .cuerpo, .brazo-izq, .brazo-der, .pierna-izq, .pierna-der {
+  position: absolute;
+  background-color: #333;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.cabeza {
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 30px;
+}
+
+.cuerpo {
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 50px;
+  border-radius: 0;
+}
+
+.brazo-izq {
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-45deg);
+  width: 8px;
+  height: 30px;
+  border-radius: 0;
+  transform-origin: top center;
+}
+
+.brazo-der {
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 8px;
+  height: 30px;
+  border-radius: 0;
+  transform-origin: top center;
+}
+
+.pierna-izq {
+  top: 110px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-30deg);
+  width: 8px;
+  height: 35px;
+  border-radius: 0;
+  transform-origin: top center;
+}
+
+.pierna-der {
+  top: 110px;
+  left: 50%;
+  transform: translateX(-50%) rotate(30deg);
+  width: 8px;
+  height: 35px;
+  border-radius: 0;
+  transform-origin: top center;
+}
+
+/* Mostrar la parte */
+.visible {
+  opacity: 1;
+}
+
+/* Contenedor del contenido a la derecha del muñeco */
+.ahorcado-contenido {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1; /* ocupa el resto del espacio */
+}
+
+.palabra {
+  font-size: 2em;
+  letter-spacing: 10px;
+  margin-bottom: 20px;
+  color: #fff;
+  text-align: center;
+}
+
+.letras-usadas, .intentos {
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.letras {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.letras button {
+  padding: 10px 15px;
+  font-size: 1.1em;
+  font-weight: 700;
+  border-radius: 8px;
+  border: 2px solid #fff;
+  color: #fff;
+  background: linear-gradient(45deg, #ff4b2b, #ff416c); /* degradado llamativo */
+  transition: all 0.3s;
+}
+
+.letras button:hover:not(:disabled) {
+  background: linear-gradient(45deg, #1a2a6c, #b21f1f, #fdbb2d); /* efecto con tu fondo global */
+  transform: translateY(-3px) scale(1.1);
+  color: #fff;
+  border-color: #ffd700;
+}
+
+.letras button:disabled {
+  background: #555;
+  color: #ccc;
+  border-color: #333;
+  cursor: not-allowed;
+}
+
+.mensaje {
+  font-size: 1.3em;
+  margin-bottom: 15px;
+  font-weight: 700;
+  color: #ffeb3b;
+  text-align: center;
+}
+
+.btn-nueva {
+  padding: 10px 25px;
+  font-size: 1.1em;
+  font-weight: 700;
+  border-radius: 10px;
+  border: 2px solid #fff;
+  background: linear-gradient(45deg, #36d1dc, #5b86e5); /* degradado llamativo */
+  color: #fff;
+  transition: all 0.3s;
+  margin-top: 10px;
+}
+
+.btn-nueva:hover {
+  background: linear-gradient(45deg, #ff416c, #ff4b2b); /* cambio llamativo al pasar mouse */
+  transform: translateY(-3px) scale(1.05);
+  border-color: #ffd700;
+  color: #fff;
+}
+
+.puntaje {
+  font-size: 1.3em;
+  font-weight: 700;
+  color: #ffd700; /* dorado */
+  margin-bottom: 10px;
+  text-align: center;
+}
