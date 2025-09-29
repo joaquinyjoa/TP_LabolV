@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewChecked } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule, NgIf, AsyncPipe, NgForOf } from '@angular/common';
 import { AuthService, FullUser } from '../../service/auth.service';
@@ -28,12 +28,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   styleUrls: ['./home.component.css'],
   providers: [MessageService],
 })
-export class HomeComponent {
+export class HomeComponent implements AfterViewChecked {
+  @ViewChild('chatBox') private chatBox!: ElementRef;
   user$: Observable<FullUser | null>;
   chatMessages$: Observable<ChatMessage[]>;
   newMessage: string = '';
   loadingChat: boolean = true;
-
   loading: boolean = false; // Spinner global para navegación
   chatWidth: number = 300;
   chatHeight: number = 350;
@@ -46,6 +46,16 @@ export class HomeComponent {
     this.user$ = this.authService.currentUserFull$;
     this.chatMessages$ = this.chatService.getMessages();
     this.chatMessages$.subscribe(() => this.loadingChat = false);
+  }
+
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+
+  private scrollToBottom(): void {
+    try {
+      this.chatBox.nativeElement.scrollTop = this.chatBox.nativeElement.scrollHeight;
+    } catch (err) { }
   }
 
   logout() {

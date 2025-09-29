@@ -36,14 +36,15 @@
   <div class="chat-container">
     <h3>Chat en tiempo real</h3>
 
-    <div class="chat-box">
+    <div class="chat-box" #chatBox>
       <div *ngIf="loadingChat" class="spinner-container">
         <p>🔄 Cargando mensajes...</p>
       </div>
 
       <div *ngFor="let msg of chatMessages$ | async" class="chat-message">
-        <b>{{ msg.user }}</b> [{{ msg.time | date:'HH:mm:ss' }}]: {{ msg.message }}
+        <b>{{ msg.user }}</b> [{{ msg.time | date:'hh:mm a' }}]: {{ msg.message }}
       </div>
+
     </div>
 
     <div class="chat-input">
