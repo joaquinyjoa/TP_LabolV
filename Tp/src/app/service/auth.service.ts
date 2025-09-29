@@ -64,7 +64,12 @@ export class AuthService {
       nick: user.nick,
       fechaRegistro,
       pais,
-      paisFlag
+      paisFlag,
+      // Campos de puntajes inicializados vacíos
+      puntosAhorcado: 0,
+      puntosPreguntados: 0,
+      puntosMayorMenor: 0,
+      puntosJuegoPropio: 0
     });
 
     return cred;

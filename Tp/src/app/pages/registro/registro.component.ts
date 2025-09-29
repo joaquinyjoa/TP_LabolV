@@ -188,7 +188,12 @@ export class RegistroComponent implements OnInit {
         apellido,
         pais: this.paisSeleccionado.name,
         paisFlag: this.paisSeleccionado.flag,
-        fechaRegistro: new Date()
+        fechaRegistro: new Date(),
+        //Campos de puntajes vacíos
+        puntosAhorcado: 0,
+        puntosPreguntados: 0,
+        puntosMayorMenor: 0,
+        puntosJuegoPropio: 0
       });
 
       this._messageService.add({ 

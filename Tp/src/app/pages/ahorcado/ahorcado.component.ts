@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http'; 
 import { firstValueFrom } from 'rxjs'; 
 import { Router } from '@angular/router'; 
+import { UsuariosService } from '../../service/usuarios';
 
 @Component({
   selector: 'app-ahorcado',
@@ -25,7 +26,10 @@ export class AhorcadoComponent {
 
   partesMuñeco: string[] = ['cabeza', 'cuerpo', 'brazo-izq', 'brazo-der', 'pierna-izq', 'pierna-der'];
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private usuariosService: UsuariosService) {
     this.nuevaPalabra();
   }
 
@@ -47,8 +51,8 @@ export class AhorcadoComponent {
 
     try {
       // Generar palabra random en español desde lista ejemplo
-      const randomWord = await this.obtenerPalabraRandom();
-      this.palabraSecreta = randomWord.toUpperCase();
+      const palabraRandom = await this.obtenerPalabraRandom();
+      this.palabraSecreta = palabraRandom.toUpperCase();
       this.palabraMostrar = Array(this.palabraSecreta.length).fill('_');
     } catch (error) {
       console.error('Error al obtener palabra de la API, usando palabra default');
@@ -67,7 +71,6 @@ export class AhorcadoComponent {
     const indice = Math.floor(Math.random() * palabrasEjemplo.length);
     const palabra = palabrasEjemplo[indice];
 
-    // Ejemplo de API (en inglés), solo para práctica
     const url = `https://api.dictionaryapi.dev/api/v2/entries/en/${palabra}`;
 
     const response: any = await firstValueFrom(this.http.get(url));
@@ -104,9 +107,14 @@ export class AhorcadoComponent {
     this.puntaje = Math.max(puntajePorLetras, puntajeIntentos);
 
     if (!this.palabraMostrar.includes('_')) {
-      this.mensaje = `¡Ganaste! 🎉 Puntaje: ${this.puntaje} puntos`;
+      this.mensaje = `¡Ganaste! 🎉 `;
+      this.usuariosService.agregarPuntajeAhorcado(this.puntaje); // Actualiza el puntaje del usuario
     } else if (this.intentos === 0) {
       this.mensaje = `Perdiste 😢 La palabra era: ${this.palabraSecreta}`;
+      // también sumamos el puntaje parcial obtenido antes de perder
+      if (this.puntaje > 0) {
+        this.usuariosService.agregarPuntajeAhorcado(this.puntaje);
+      }
     }
   }
 
