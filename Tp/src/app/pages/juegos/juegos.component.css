@@ -91,3 +91,16 @@
   box-shadow: 0 8px 20px rgba(0,0,0,0.4);
   background: linear-gradient(90deg, #7a00ff, #00d4ff);
 }
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}

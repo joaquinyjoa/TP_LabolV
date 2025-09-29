@@ -1,33 +1,45 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { CommonModule, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-juegos',
   templateUrl: './juegos.component.html',
-  styleUrls: ['./juegos.component.css']
+  styleUrls: ['./juegos.component.css'],
+  imports: [
+    CommonModule,
+    NgIf,
+    MatProgressSpinnerModule
+  ],
 })
-export class JuegosComponent implements OnInit {
+export class JuegosComponent {
+
+  loading: boolean = false; // Spinner global
 
   constructor(private router: Router) {}
 
-  ngOnInit(): void {
-   
+  // Spinner de 3 segundos y luego navegar
+  async navegarConSpinner(path: string) {
+    this.loading = true;
+    await new Promise(res => setTimeout(res, 3000));
+    this.router.navigate([path]);
+    this.loading = false;
   }
 
   volverHome() {
-    this.router.navigate(['/home']);
+    this.navegarConSpinner('/home');
   }
 
   navegarPreguntados() {
-    this.router.navigate(['/preguntados']);
+    this.navegarConSpinner('/preguntados');
   }
 
   navegarAhorcado() {
-    this.router.navigate(['/ahorcado']);
+    this.navegarConSpinner('/ahorcado');
   }
 
   navegarMayorOMenor() {
-    this.router.navigate(['/mayor-menor']);
+    this.navegarConSpinner('/mayor-menor');
   }
-
 }
