@@ -26,4 +26,8 @@ export class JuegosComponent implements OnInit {
     this.router.navigate(['/ahorcado']);
   }
 
+  navegarMayorOMenor() {
+    this.router.navigate(['/mayor-menor']);
+  }
+
 }
