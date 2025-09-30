@@ -57,7 +57,7 @@ export class MayorMenorComponent {
   }
 
   // Navegar al home
-  navegarAlHome() {
-    this.router.navigate(['/home']);
+  navegarAJuegos() {
+    this.router.navigate(['/juegos']);
   }
 }

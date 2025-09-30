@@ -8,6 +8,7 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http'; // 🔹 Importa HttpClientModule
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,9 +25,9 @@ export const appConfig: ApplicationConfig = {
       })
     ),
     provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()), provideClientHydration(withEventReplay()),
-     provideRouter([]),
-    importProvidersFrom(ToastModule, BrowserAnimationsModule),
+    provideFirestore(() => getFirestore()),
+    provideClientHydration(withEventReplay()),
+    importProvidersFrom(ToastModule, BrowserAnimationsModule, HttpClientModule), // 🔹 Aca agregamos HttpClientModule
     MessageService
   ],
 };

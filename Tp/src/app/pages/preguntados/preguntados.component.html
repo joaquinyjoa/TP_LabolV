@@ -1,1 +1,28 @@
-<p>preguntados works!</p>
+<div class="preguntados">
+  <h2>¿Quién es este superhéroe?</h2>
+
+  <div *ngIf="imagenHeroe">
+    <img [src]="imagenHeroe" alt="Heroe" width="250" />
+  </div>
+
+  <div class="opciones">
+    <button *ngFor="let opcion of opciones"
+            (click)="verificarRespuesta(opcion)"
+            [disabled]="respuestaSeleccionada">
+      {{ opcion }}
+    </button>
+  </div>
+
+  <p class="retroalimentacion">{{ retroalimentacion }}</p>
+
+  <button class="siguiente"
+        (click)="nuevaPregunta()"
+        [disabled]="!respuestaSeleccionada">
+    Siguiente
+  </button>
+
+  <!-- Botón Volver al Home -->
+  <button class="volver-home" (click)="navegarAJuegos()">
+    Ir a los juegos
+  </button>
+</div>
